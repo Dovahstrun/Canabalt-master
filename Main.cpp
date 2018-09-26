@@ -28,6 +28,11 @@ int main()
 	sf::Sprite testSprite;
 	testSprite.setTexture(AssetManager::GetTexture("graphics/playerJump.png"));
 
+	//Test sound
+	sf::Sound testSound;
+	testSound.setBuffer(AssetManager::GetSoundBuffer("audio/death.wav"));
+	testSound.play();
+
 	// end game setup
 	// --------------------------------------
 

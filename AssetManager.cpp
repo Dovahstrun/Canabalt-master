@@ -63,3 +63,21 @@ sf::Texture& AssetManager::GetTexture(std::string _fileName)
 	}
 
 }
+
+//See texture function above for notes
+sf::SoundBuffer& AssetManager::GetSoundBuffer(std::string _fileName)
+{
+	auto keyValuePair = s_instance->m_soundBuffers.find(_fileName);
+
+	if (keyValuePair != s_instance->m_soundBuffers.end())
+	{
+		//We did find it
+		return keyValuePair->second;
+	}
+	else
+	{
+		sf::SoundBuffer& soundBuffer = s_instance->m_soundBuffers[_fileName];
+		soundBuffer.loadFromFile(_fileName);
+		return soundBuffer;
+	}
+}
