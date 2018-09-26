@@ -65,6 +65,24 @@ sf::Texture& AssetManager::GetTexture(std::string _fileName)
 }
 
 //See texture function above for notes
+sf::Font& AssetManager::GetFont(std::string _fileName)
+{
+	auto keyValuePair = s_instance->m_fonts.find(_fileName);
+
+	if (keyValuePair != s_instance->m_fonts.end())
+	{
+		//We did find it
+		return keyValuePair->second;
+	}
+	else
+	{
+		sf::Font& font = s_instance->m_fonts[_fileName];
+		font.loadFromFile(_fileName);
+		return font;
+	}
+}
+
+//See texture function above for notes
 sf::SoundBuffer& AssetManager::GetSoundBuffer(std::string _fileName)
 {
 	auto keyValuePair = s_instance->m_soundBuffers.find(_fileName);
