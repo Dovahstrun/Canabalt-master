@@ -6,6 +6,8 @@
 
 // Project Includes
 #include "AssetManager.h"
+#include "Animation.h"
+
 
 int main()
 {
@@ -37,6 +39,13 @@ int main()
 	sf::Text testText;
 	testText.setFont(AssetManager::GetFont("fonts/mainfont.ttf"));
 	testText.setString("Test Text");
+
+	//Tsting animation
+	Animation testAnimation;
+	testAnimation.setSprite(testSprite);
+	testAnimation.addFrame(AssetManager::GetTexture("graphics/playerRun1.png"));
+	testAnimation.addFrame(AssetManager::GetTexture("graphics/playerRun2.png"));
+
 	
 
 	// end game setup
@@ -68,6 +77,9 @@ int main()
 		// Update
 		// --------------------------------------
 		sf::Time frameTime = gameClock.restart();
+
+		//update our animation
+		testAnimation.Update(frameTime);
 
 		// end update
 		// --------------------------------------
