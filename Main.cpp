@@ -45,6 +45,9 @@ int main()
 	testAnimation.setSprite(testSprite);
 	testAnimation.addFrame(AssetManager::GetTexture("graphics/playerRun1.png"));
 	testAnimation.addFrame(AssetManager::GetTexture("graphics/playerRun2.png"));
+	testAnimation.setLoop(true);
+	testAnimation.setPlayBackSpeed(1.0f);
+	testAnimation.play();
 
 	
 
