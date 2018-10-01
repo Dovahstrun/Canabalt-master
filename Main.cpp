@@ -7,6 +7,7 @@
 // Project Includes
 #include "AssetManager.h"
 #include "Animation.h"
+#include "AnimationSystem.h"
 
 
 int main()
@@ -40,16 +41,21 @@ int main()
 	testText.setFont(AssetManager::GetFont("fonts/mainfont.ttf"));
 	testText.setString("Test Text");
 
-	//Tsting animation
-	Animation testAnimation;
-	testAnimation.setSprite(testSprite);
+	//Testing animation
+	AnimationSystem testAnimationSystem;
+	testAnimationSystem.SetSprite(testSprite);
+
+	Animation& testAnimation = testAnimationSystem.CreateAnimation("run");
 	testAnimation.addFrame(AssetManager::GetTexture("graphics/playerRun1.png"));
 	testAnimation.addFrame(AssetManager::GetTexture("graphics/playerRun2.png"));
 	testAnimation.setLoop(true);
 	testAnimation.setPlayBackSpeed(1.0f);
-	testAnimation.play();
-
 	
+
+	Animation& jumpAnimation = testAnimationSystem.CreateAnimation("jump");
+	jumpAnimation.addFrame(AssetManager::GetTexture("graphics/playerJump.png"));
+
+	testAnimationSystem.Play("jump");
 
 	// end game setup
 	// --------------------------------------

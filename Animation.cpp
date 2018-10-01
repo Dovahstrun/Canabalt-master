@@ -66,7 +66,7 @@ void Animation::Update(sf::Time _frameTime)
 	}
 }
 
-void Animation::play()
+void Animation::Play()
 {
 	//Update our sprite to the current frame immediately
 	if (m_sprite) //Is not equak to 0 aka null aka nullptr
@@ -87,7 +87,7 @@ void Animation::play()
 	}
 }
 
-void Animation::pause()
+void Animation::Pause()
 {
 	//stop playback, keep current frame as is
 	m_playing = false;
@@ -99,7 +99,7 @@ bool Animation::isPlaying()
 	return m_playing;
 }
 
-void Animation::stop()
+void Animation::Stop()
 {
 	//Stop playback and reset to first frame
 	m_playing = false;
@@ -111,7 +111,7 @@ void Animation::addFrame(sf::Texture& _newFrame)
 	m_frames.push_back(&_newFrame);
 }
 
-void Animation::setSprite(sf::Sprite& _sprite)
+void Animation::SetSprite(sf::Sprite& _sprite)
 {
 	m_sprite = &_sprite;
 }
@@ -123,7 +123,7 @@ void Animation::setPlayBackSpeed(float _framesPerSecond)
 	//If the playback speed is zero, pause to protect from divide by zero error
 	if (m_playBackSpeed == 0)
 	{
-		pause();
+		Pause();
 	}
 }
 
