@@ -6,8 +6,7 @@
 
 // Project Includes
 #include "AssetManager.h"
-#include "Animation.h"
-#include "AnimationSystem.h"
+#include "Player.h"
 
 
 int main()
@@ -41,21 +40,10 @@ int main()
 	testText.setFont(AssetManager::GetFont("fonts/mainfont.ttf"));
 	testText.setString("Test Text");
 
-	//Testing animation
-	AnimationSystem testAnimationSystem;
-	testAnimationSystem.SetSprite(testSprite);
+	//Create player
+	Player player;
+	player.Spawn();
 
-	Animation& testAnimation = testAnimationSystem.CreateAnimation("run");
-	testAnimation.addFrame(AssetManager::GetTexture("graphics/playerRun1.png"));
-	testAnimation.addFrame(AssetManager::GetTexture("graphics/playerRun2.png"));
-	testAnimation.setLoop(true);
-	testAnimation.setPlayBackSpeed(1.0f);
-	
-
-	Animation& jumpAnimation = testAnimationSystem.CreateAnimation("jump");
-	jumpAnimation.addFrame(AssetManager::GetTexture("graphics/playerJump.png"));
-
-	testAnimationSystem.Play("jump");
 
 	// end game setup
 	// --------------------------------------
@@ -73,7 +61,7 @@ int main()
 		while (gameWindow.pollEvent(event))
 		{
 
-
+			player.Input(event);
 
 			if (event.type == sf::Event::Closed)
 			{
@@ -90,8 +78,8 @@ int main()
 		// --------------------------------------
 		sf::Time frameTime = gameClock.restart();
 
-		//update our animation
-		testAnimationSystem.Update(frameTime);
+
+		player.Update(frameTime);
 
 		// end update
 		// --------------------------------------
@@ -106,8 +94,7 @@ int main()
 		gameWindow.clear();
 
 		// Draw Everything
-		gameWindow.draw(testSprite);
-		gameWindow.draw(testText);
+		player.Draw(gameWindow);
 
 		// Display the window contents to the screen
 		gameWindow.display();

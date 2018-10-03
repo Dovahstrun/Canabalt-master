@@ -17,6 +17,8 @@ public:
 	void Update(sf::Time _frameTime);
 	void Draw(sf::RenderTarget& _target);
 
+	void Spawn();
+
 private:
 
 	//Assets
