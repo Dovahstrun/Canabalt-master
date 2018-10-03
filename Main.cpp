@@ -94,8 +94,10 @@ int main()
 
 		sf::Time frameTime = gameClock.restart();
 
-
 		player.Update(frameTime);
+
+		//Handle collision
+		player.HandleCollision(platform.GetCollider());
 
 		//Update camera position
 		camera.setCenter(player.GetPosition().x + camera.getSize().x * 0.4f, camera.getCenter().y);

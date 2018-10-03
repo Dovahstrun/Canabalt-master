@@ -15,6 +15,8 @@ public:
 	void Spawn();
 	void Draw(sf::RenderTarget& _target);
 
+	sf::FloatRect GetCollider();
+
 private:
 
 	//Assets
