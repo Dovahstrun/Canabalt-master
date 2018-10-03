@@ -105,8 +105,10 @@ sf::Vector2f Player::GetPosition()
 
 void Player::HandleCollision(sf::FloatRect _platform)
 {
+	//Record whether we used to be touching the grounf
+	bool wereTouchingGround = m_touchingGround;
 	//Assume we did not collide
-	bool hadCollision = false;
+	m_touchingGround = false;
 
 
 	////Assume our collision will fail (that we're not touching the ground)
@@ -134,28 +136,23 @@ void Player::HandleCollision(sf::FloatRect _platform)
 		if (feetCollider.intersects(platformTop))
 		{
 			//Yes feet are touching
-			hadCollision = true;
+			m_touchingGround = true;
 
 			//Check if we are falling downward
-			if (m_velocity.y > 0)
+			if (wereTouchingGround == false && m_velocity.y > 0)
 			{
-				//Were we already touching the ground
-				if (m_touchingGround == false)
-				{
-					//We have touched the ground
-					m_animation.Play("run");
-					m_landSound.play();
-					m_touchingGround = true;
-					m_velocity.y = 0;
-				}
+				//We have touched the ground
+				m_animation.Play("run");
+				m_landSound.play();
+				m_velocity.y = 0;
+				
 			}
 		}
 
 	}
-	//If there was not a collision, sewt touching ground to false
-	if (!hadCollision)
+	//If there was not a collision, set touching ground to false
+	if (!m_touchingGround && wereTouchingGround)
 	{
-		m_touchingGround = false;
 		m_animation.Play("jump");
 	}
 
