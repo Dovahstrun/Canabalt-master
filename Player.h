@@ -2,7 +2,8 @@
 
 //Library includes
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
+#include <vector>
+#include <SFML/audio.hpp>
 
 //Project Include 
 #include "AnimationSystem.h"
@@ -21,7 +22,7 @@ public:
 
 	sf::Vector2f GetPosition();
 
-	void HandleCollision(sf::FloatRect _platform);
+	void HandleCollision(std::vector<sf::FloatRect> _platforms);
 
 private:
 

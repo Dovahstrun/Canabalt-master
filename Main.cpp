@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
 #include <ctime>
+#include <vector>
 
 // Project Includes
 #include "AssetManager.h"
@@ -54,8 +55,13 @@ int main()
 	sf::View camera = gameWindow.getDefaultView();
 
 	//Create platforms
-	Platform platform;
-	platform.Spawn();
+
+	std::vector<Platform> myPlatforms;
+	for (int i = 0; i < 5; ++i)
+	{
+		myPlatforms.push_back(Platform());
+		myPlatforms.back().Spawn();
+	}
 
 	/// --------------------------------------
 	/// END GAME SETUP
@@ -97,7 +103,12 @@ int main()
 		player.Update(frameTime);
 
 		//Handle collision
-		player.HandleCollision(platform.GetCollider());
+		std::vector<sf::FloatRect> platformColliders;
+		for (auto it = myPlatforms.begin(); it != myPlatforms.end(); ++it)
+		{
+			platformColliders.push_back(it->GetCollider());
+		}
+		player.HandleCollision(platformColliders);
 
 		//Update camera position
 		camera.setCenter(player.GetPosition().x + camera.getSize().x * 0.4f, camera.getCenter().y);
@@ -119,7 +130,10 @@ int main()
 		gameWindow.setView(camera);
 
 		player.Draw(gameWindow);
-		platform.Draw(gameWindow);
+		for (auto it = myPlatforms.begin(); it != myPlatforms.end(); ++it)
+		{
+			it->Draw(gameWindow);
+		}
 
 		//Draw the UI to the window
 
