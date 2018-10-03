@@ -1,19 +1,22 @@
-// --------------------------------------
-// Includes
-// --------------------------------------
+/// --------------------------------------
+/// Includes
+/// --------------------------------------
 // Libraries
 #include <SFML/Graphics.hpp>
+#include <cstdlib>
+#include <ctime>
 
 // Project Includes
 #include "AssetManager.h"
 #include "Player.h"
+#include "Platform.h"
 
 
 int main()
 {
-	// --------------------------------------
-	// Game Setup
-	// --------------------------------------
+	/// --------------------------------------
+	/// GAME SETUP
+	/// --------------------------------------
 
 	// Render Window creation
 	sf::RenderWindow gameWindow;
@@ -25,6 +28,9 @@ int main()
 
 	// Create AssetManager
 	AssetManager assets;
+
+	//Seed a random number generator
+	srand(time(NULL));
 
 	// Testing AssetManager
 	sf::Sprite testSprite;
@@ -44,19 +50,26 @@ int main()
 	Player player;
 	player.Spawn();
 
+	//Create the game camera
+	sf::View camera = gameWindow.getDefaultView();
 
-	// end game setup
-	// --------------------------------------
+	//Create platforms
+	Platform platform;
+	platform.Spawn();
+
+	/// --------------------------------------
+	/// END GAME SETUP
+	/// --------------------------------------
 
 
-	// --------------------------------------
-	// Game Loop
-	// --------------------------------------
+	/// --------------------------------------
+	/// GAME LOOP
+	/// --------------------------------------
 	while (gameWindow.isOpen())
 	{
-		// --------------------------------------
-		// Input
-		// --------------------------------------
+		/// --------------------------------------
+		/// INPUT
+		/// --------------------------------------
 		sf::Event event;
 		while (gameWindow.pollEvent(event))
 		{
@@ -69,43 +82,58 @@ int main()
 			} // End if (closed)
 		} // end event polling loop
 
-		// end input
-		// --------------------------------------
+		/// --------------------------------------
+		/// END INPUT
+		/// --------------------------------------
 
 
-		// --------------------------------------
-		// Update
-		// --------------------------------------
+
+		/// --------------------------------------
+		/// UPDATE
+		/// --------------------------------------
+
 		sf::Time frameTime = gameClock.restart();
 
 
 		player.Update(frameTime);
 
-		// end update
-		// --------------------------------------
+		//Update camera position
+		camera.setCenter(player.GetPosition().x + camera.getSize().x * 0.4f, camera.getCenter().y);
+
+		/// --------------------------------------
+		/// END UPDATE
+		/// --------------------------------------
 
 
 
-		// --------------------------------------
-		// Draw
-		// --------------------------------------
+		/// --------------------------------------
+		/// DRAW
+		/// --------------------------------------
 
 		// Clear the window to a single colour
 		gameWindow.clear();
 
-		// Draw Everything
-		player.Draw(gameWindow);
+		//Draw the game world using the camera
+		gameWindow.setView(camera);
 
+		player.Draw(gameWindow);
+		platform.Draw(gameWindow);
+
+		//Draw the UI to the window
+
+		gameWindow.setView(gameWindow.getDefaultView());
 		// Display the window contents to the screen
 		gameWindow.display();
 
-		// end draw
-		// --------------------------------------
+		/// --------------------------------------
+		/// END DRAW
+		/// --------------------------------------
 
 	} // end of the game while loop
 
-	// end game loop
-	// --------------------------------------
+	/// --------------------------------------
+	/// END GAME LOOP
+	/// --------------------------------------
 
 	// exit point for the program
 	return 0;
